@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/15 18:10:07 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/15 19:28:08 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,26 @@
 
 char	*get_next_line(int fd)
 {
-	int		state;
-	char	*line;
-	char	buff;
+	static int		state;
+	char			*line;
+	char			buff;
 
-	state = 1;
 	line = NULL;
 	buff = 0;
+	state = read(fd, &buff, 1);
 	while (state == 1 && buff != '\n')
 	{
+		line = add_char(buff, line);
+		if (line == NULL)
+			return (NULL);
 		state = read(fd, &buff, 1);
-		if (state == 1 && buff != '\n')
-		{
-			if (add_char(buff, line) == NULL)
-				return (NULL);
-		}
 	}
-	if ((state == 0 || state == -1) && line == NULL)
+	if (line == NULL && (buff == '\n' || state == 0))
+	{
+		state = -2;
+		return (empty_line());
+	}
+	if ((state == 0 || state == -1 || state == -2) && line == NULL)
 		return (NULL);
 	else
 		return (line);
@@ -63,8 +66,28 @@ char	*add_char(char c, char *line)
 	free(tmp);
 	return (line);
 }
+
+char	*empty_line(void)
+{
+	char	*line;
+
+	line = malloc(sizeof(char));
+	if (line == NULL)
+		return (line);
+	line[0] = '\0';
+	return (line);
+}
+
+#include <fcntl.h>
+#include <stdio.h>
 int	main(void)
 {
-	printf("%s\n", get_next_line(open("test.txt")));
+	int	fd;
+
+	fd = open("files/nl", O_RDONLY);
+	printf("%s\n", get_next_line(fd));
+	printf("%s\n", get_next_line(fd));
+	printf("%s\n", get_next_line(fd));
+	printf("%s\n", get_next_line(fd));
 	return (0);
 }
