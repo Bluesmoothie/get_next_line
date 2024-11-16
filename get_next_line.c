@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/15 19:28:08 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/16 13:48:51 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 char	*get_next_line(int fd)
 {
-	static int		state;
-	char			*line;
-	char			buff;
+	int			state;
+	char		*line;
+	char		buff;
 
 	line = NULL;
+	if (fd < 0)
+		return (NULL);
 	buff = 0;
 	state = read(fd, &buff, 1);
 	while (state == 1 && buff != '\n')
@@ -28,15 +30,9 @@ char	*get_next_line(int fd)
 			return (NULL);
 		state = read(fd, &buff, 1);
 	}
-	if (line == NULL && (buff == '\n' || state == 0))
-	{
-		state = -2;
-		return (empty_line());
-	}
-	if ((state == 0 || state == -1 || state == -2) && line == NULL)
-		return (NULL);
-	else
-		return (line);
+	if (buff)
+		return (add_char(buff, line));
+	return (line);
 }
 
 char	*add_char(char c, char *line)
@@ -78,16 +74,25 @@ char	*empty_line(void)
 	return (line);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
-int	main(void)
-{
-	int	fd;
+// #include <fcntl.h>
+// #include <stdio.h>
+// int	main(void)
+// {
+// 	int		fd;
+// 	int		i;
+// 	char	*str;
 
-	fd = open("files/nl", O_RDONLY);
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	return (0);
-}
+// 	fd = open("files/multiple_nlx5", O_RDONLY);
+// 	str = get_next_line(fd);
+// 	i = 1;
+// 	while (str)
+// 	{
+// 		printf("Line %d = |%s|\n", i, str);
+// 		free(str);
+// 		str = get_next_line(fd);
+// 		i++;
+// 	}
+// 	printf("End");
+// 	close(fd);
+// 	return (0);
+// }
