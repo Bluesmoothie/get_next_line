@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/16 13:48:51 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/16 13:54:51 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_next_line(int fd)
 			return (NULL);
 		state = read(fd, &buff, 1);
 	}
-	if (buff)
+	if (buff == '\n')
 		return (add_char(buff, line));
 	return (line);
 }
@@ -82,7 +82,7 @@ char	*empty_line(void)
 // 	int		i;
 // 	char	*str;
 
-// 	fd = open("files/multiple_nlx5", O_RDONLY);
+// 	fd = open("files/1char.txt", O_RDONLY);
 // 	str = get_next_line(fd);
 // 	i = 1;
 // 	while (str)
