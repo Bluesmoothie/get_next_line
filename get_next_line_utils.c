@@ -6,15 +6,15 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:48 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/15 17:59:57 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/19 14:56:52 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	int	len;
+	size_t	len;
 
 	len = 0;
 	while (s[len] != '\0')
@@ -22,9 +22,9 @@ int	ft_strlen(const char *s)
 	return (len);
 }
 
-int	ft_strlcpy(char *dst, const char *src, int size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	int	count;
+	size_t	count;
 
 	count = 0;
 	if (size == 0)
@@ -36,10 +36,4 @@ int	ft_strlcpy(char *dst, const char *src, int size)
 	}
 	dst[count] = '\0';
 	return (ft_strlen(src));
-}
-
-char	*protect(char *str)
-{
-	free(str);
-	return (NULL);
 }
