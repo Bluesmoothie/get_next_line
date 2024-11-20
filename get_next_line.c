@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/20 19:23:46 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/20 19:32:29 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*get_next_line(int fd)
 char	*read_buff(char *buff, int fd, int *state)
 {
 	char	*line;
+	char	*tmp;
 
 	line = NULL;
 	if (*state == 0 && buff[0] == '\0')
@@ -54,7 +55,11 @@ char	*read_buff(char *buff, int fd, int *state)
 		if (ft_strchr(buff, '\n') || state == 0)
 			return (extract_line(line, buff));
 		else
+		{
+			tmp = line;
 			line = ft_strjoin(line, buff);
+			free(tmp);
+		}
 	}
 	return (extract_line(line, buff));
 }
@@ -72,6 +77,7 @@ char	*extract_line(char *line, char *buff)
 	res = malloc(sizeof(char) * ft_strlen(line) + i + 1);
 	if (res == NULL)
 		return (NULL);
+	res[0] = '\0';
 	ft_strlcat(res, line, ft_strlen(line) + 1);
 	ft_strlcat(res, buff, ft_strlen(line) + i + 1);
 	if (line != NULL)

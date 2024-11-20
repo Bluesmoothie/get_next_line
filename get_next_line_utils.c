@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:48 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/20 18:03:29 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/20 19:33:19 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	join = malloc (sizeof(char) * size);
 	if (join == NULL)
 		return (NULL);
+	join[0] = '\0';
 	ft_strlcat(join, s1, ft_strlen(s1) + 1);
 	ft_strlcat(join, s2, size);
 	return (join);
@@ -78,7 +79,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		i++;
 	if (i == size)
 		return (i + ft_strlen(src));
-	while (src[j] && i + j < size - 1)
+	while (src[j] && i + j < size - 1 && src != NULL)
 	{
 		dst[i + j] = src[j];
 		j++;
