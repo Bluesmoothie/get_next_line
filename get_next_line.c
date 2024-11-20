@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/16 13:54:51 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/20 19:11:37 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,85 +14,90 @@
 
 char	*get_next_line(int fd)
 {
-	int			state;
-	char		*line;
-	char		buff;
+	static char	buff[BUFFER_SIZE + 1] = "\0";
+	char		*res;
+	int			i;
+	char		tmp[BUFFER_SIZE + 1];
 
-	line = NULL;
-	if (fd < 0)
+	tmp[0] = '\0';
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	buff = 0;
-	state = read(fd, &buff, 1);
-	while (state == 1 && buff != '\n')
+	res = read_buff(buff, fd);
+	i = 0;
+	while (buff[i] != '\0' && buff[i] != '\n')
+		i++;
+	if (buff[i] == '\n')
+		i++;
+	ft_strlcat(tmp, &buff[i], ft_strlen(&buff[i]) + 1);
+	i = 0;
+	while (tmp[i] != '\0')
 	{
-		line = add_char(buff, line);
-		if (line == NULL)
-			return (NULL);
-		state = read(fd, &buff, 1);
+		buff[i] = tmp[i];
+		i++;
 	}
-	if (buff == '\n')
-		return (add_char(buff, line));
-	return (line);
+	buff[i] = '\0';
+	return (res);
 }
 
-char	*add_char(char c, char *line)
+char	*read_buff(char *buff, int fd)
 {
-	char	*tmp;
-
-	if (line == NULL)
-	{
-		line = malloc(sizeof(char) * 2);
-		if (line == NULL)
-			return (line);
-		line[0] = c;
-		line[1] = '\0';
-		return (line);
-	}
-	tmp = malloc(sizeof(char) * (ft_strlen(line) + 1));
-	if (tmp == NULL)
-		return (protect(line));
-	ft_strlcpy(tmp, line, ft_strlen(line) + 1);
-	free(line);
-	line = malloc(sizeof(char) * (ft_strlen(tmp) + 2));
-	if (line == NULL)
-		return (protect(tmp));
-	ft_strlcpy(line, tmp, ft_strlen(tmp) + 1);
-	line[ft_strlen(tmp)] = c;
-	line[ft_strlen(tmp) + 1] = '\0';
-	free(tmp);
-	return (line);
-}
-
-char	*empty_line(void)
-{
+	int		state;
 	char	*line;
 
-	line = malloc(sizeof(char));
-	if (line == NULL)
-		return (line);
-	line[0] = '\0';
-	return (line);
+	line = NULL;
+	state = 1;
+	while (ft_strchr(buff, '\n') == NULL && state > 0)
+	{
+		state = read(fd, buff, BUFFER_SIZE);
+		buff[state] = '\0';
+		if (ft_strchr(buff, '\n'))
+			return (extract_line(line, buff));
+		else
+			line = ft_strjoin(line, buff);
+	}
+	return (extract_line(line, buff));
 }
 
-// #include <fcntl.h>
-// #include <stdio.h>
-// int	main(void)
-// {
-// 	int		fd;
-// 	int		i;
-// 	char	*str;
+char	*extract_line(char *line, char *buff)
+{
+	char	*res;
+	int		i;
 
-// 	fd = open("files/1char.txt", O_RDONLY);
-// 	str = get_next_line(fd);
-// 	i = 1;
-// 	while (str)
-// 	{
-// 		printf("Line %d = |%s|\n", i, str);
-// 		free(str);
-// 		str = get_next_line(fd);
-// 		i++;
-// 	}
-// 	printf("End");
-// 	close(fd);
-// 	return (0);
-// }
+	i = 0;
+	while (buff[i] != '\0' && buff[i] != '\n')
+		i++;
+	if (buff[i] == '\n')
+		i++;
+	res = malloc(sizeof(char) * ft_strlen(line) + i + 1);
+	printf("size = %i\n", ft_strlen(line) + i + 1);
+	if (res == NULL)
+		return (NULL);
+	ft_strlcat(res, line, ft_strlen(line) + 1);
+	ft_strlcat(res, buff, ft_strlen(line) + i + 1);
+	if (line != NULL)
+		free(line);
+	return (res);
+}
+
+#include <fcntl.h>
+#include <stdio.h>
+int	main(void)
+{
+	int		fd;
+	int		i;
+	char	*str;
+
+	fd = open("files/lines_around_10.txt", O_RDONLY);
+	str = get_next_line(fd);
+	i = 1;
+	while (i < 10)
+	{
+		printf("Line %d = |%s|\n", i, str);
+		free(str);
+		str = get_next_line(fd);
+		i++;
+	}
+	printf("End");
+	close(fd);
+	return (0);
+}
