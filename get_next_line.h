@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:13 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 16:36:14 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 16:49:42 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE	1
+#  define BUFFER_SIZE	42
 # endif
 
 # define MAX_INT		2147483647

@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 16:48:10 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 16:52:36 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,8 @@ char	*update_mem(char *mem)
 	mem = ft_calloc(ft_strlen(&mem[i]) + 1, sizeof(char));
 	if (mem == NULL)
 		return (NULL);
-	while (tmp[i] != '\n' && tmp[i] != '\0')
+	while (tmp[i] != '\0')
 		mem[j++] = tmp[i++];
-	if (tmp[i] == '\n')
-		mem[j++] = '\n';
 	mem[j] = '\0';
 	free(tmp);
 	return (mem);
