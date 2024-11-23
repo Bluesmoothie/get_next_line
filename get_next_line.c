@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 16:45:17 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 16:48:10 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ char	*extract_line(char **mem)
 		res[i] = (*mem)[i];
 		i++;
 	}
+	if ((*mem)[i] == '\n')
+		res[i++] = '\n';
+	res[i] = '\0';
 	return (res);
 }
 
