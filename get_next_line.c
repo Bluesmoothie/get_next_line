@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/20 19:32:29 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 13:39:45 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ char	*extract_line(char *line, char *buff)
 	int		i;
 
 	i = 0;
+	if (ft_strlen(line) == 0 && ft_strlen(buff) == 0)
+	{
+		if (line != NULL)
+			free (line);
+		return (NULL);
+	}
 	while (buff[i] != '\0' && buff[i] != '\n')
 		i++;
 	if (buff[i] == '\n')
