@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 13:39:45 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 14:22:47 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buff[BUFFER_SIZE + 1] = "\0";
+	static char	buff[BUFFER_SIZE + 1];
 	char		*res;
 	int			i;
 	char		tmp[BUFFER_SIZE + 1];
@@ -51,8 +51,9 @@ char	*read_buff(char *buff, int fd, int *state)
 	while (ft_strchr(buff, '\n') == NULL && *state > 0)
 	{
 		*state = read(fd, buff, BUFFER_SIZE);
-		buff[*state] = '\0';
-		if (ft_strchr(buff, '\n') || state == 0)
+		if (*state > 0)
+			buff[*state] = '\0';
+		if (ft_strchr(buff, '\n') || *state == 0)
 			return (extract_line(line, buff));
 		else
 		{
@@ -80,7 +81,7 @@ char	*extract_line(char *line, char *buff)
 		i++;
 	if (buff[i] == '\n')
 		i++;
-	res = malloc(sizeof(char) * ft_strlen(line) + i + 1);
+	res = malloc(sizeof(char) * (ft_strlen(line) + i + 1));
 	if (res == NULL)
 		return (NULL);
 	res[0] = '\0';
@@ -91,26 +92,26 @@ char	*extract_line(char *line, char *buff)
 	return (res);
 }
 
-// #include <fcntl.h>
-// #include <stdio.h>
-// int	main(int argc, char *argv[])
-// {
-// 	int		fd;
-// 	int		i;
-// 	char	*str;
+#include <fcntl.h>
+#include <stdio.h>
+int	main(int argc, char *argv[])
+{
+	int		fd;
+	int		i;
+	char	*str;
 
-// 	(void) argc;
-// 	fd = open(argv[1], O_RDONLY);
-// 	str = get_next_line(fd);
-// 	i = 1;
-// 	while (str)
-// 	{
-// 		printf("Line %d = |%s|\n", i, str);
-// 		free(str);
-// 		str = get_next_line(fd);
-// 		i++;
-// 	}
-// 	printf("End");
-// 	close(fd);
-// 	return (0);
-// }
+	(void) argc;
+	fd = open(argv[1], O_RDONLY);
+	str = get_next_line(fd);
+	i = 1;
+	while (str)
+	{
+		printf("Line %d = |%s|\n", i, str);
+		free(str);
+		str = get_next_line(fd);
+		i++;
+	}
+	printf("End");
+	close(fd);
+	return (0);
+}
