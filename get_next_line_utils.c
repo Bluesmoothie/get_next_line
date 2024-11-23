@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:48 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 13:40:38 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 13:49:11 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*array;
-	long	overflow;
+	size_t	overflow;
 	size_t	count;
 
 	overflow = nmemb * size;
 	if (overflow > MAX_INT)
 		return (NULL);
-	array = malloc (overflow);
+	array = malloc(overflow);
 	if (array == NULL)
 		return (NULL);
 	count = 0;
-	while (count < size)
+	while (count < overflow)
 	{
 		((char *)array)[count] = 0;
 		count++;
@@ -53,8 +53,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	size;
 	char	*join;
 
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
-	join = malloc (sizeof(char) * size);
+	join = malloc(sizeof(char) * size);
 	if (join == NULL)
 		return (NULL);
 	join[0] = '\0';
@@ -75,6 +79,8 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 		dst[0] = '\0';
 		return (1);
 	}
+	if (size == 0)
+		return (ft_strlen(src));
 	while (dst[i] && i < size)
 		i++;
 	if (i == size)
