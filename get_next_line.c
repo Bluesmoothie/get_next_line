@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 16:36:04 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 16:45:17 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,17 @@ char	*extract_line(char **mem)
 		*mem = NULL;
 		return (NULL);
 	}
-	while (*mem[i] != '\n' && *mem[i] != '\0')
+	while ((*mem)[i] != '\n' && (*mem)[i] != '\0')
+		i++;
+	if ((*mem)[i] == '\n')
 		i++;
 	res = ft_calloc(i + 1, sizeof(char));
 	if (res == NULL)
 		return (NULL);
 	i = 0;
-	while (*mem[i] != '\n' && *mem[i] != '\0')
+	while ((*mem)[i] != '\n' && (*mem)[i] != '\0')
 	{
-		res[i] = *mem[i];
+		res[i] = (*mem)[i];
 		i++;
 	}
 	return (res);
@@ -83,47 +85,49 @@ char	*update_mem(char *mem)
 {
 	char	*tmp;
 	size_t	i;
+	size_t	j;
 
 	i = 0;
+	j = 0;
 	if (mem == NULL)
 		return (NULL);
 	while (mem[i] != '\n' && mem[i] != '\0')
 		i++;
+	if (mem[i] == '\n')
+		i++;
 	tmp = mem;
-	mem = ft_calloc(i + 1, sizeof(char));
+	mem = ft_calloc(ft_strlen(&mem[i]) + 1, sizeof(char));
 	if (mem == NULL)
 		return (NULL);
-	i = 0;
 	while (tmp[i] != '\n' && tmp[i] != '\0')
-	{
-		mem[i] = tmp[i];
-		i++;
-	}
-	mem[i] = '\0';
+		mem[j++] = tmp[i++];
+	if (tmp[i] == '\n')
+		mem[j++] = '\n';
+	mem[j] = '\0';
 	free(tmp);
 	return (mem);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
-int	main(int argc, char *argv[])
-{
-	int		fd;
-	int		i;
-	char	*str;
+// #include <fcntl.h>
+// #include <stdio.h>
+// int	main(int argc, char *argv[])
+// {
+// 	int		fd;
+// 	int		i;
+// 	char	*str;
 
-	(void) argc;
-	fd = open(argv[1], O_RDONLY);
-	str = get_next_line(fd);
-	i = 1;
-	while (str)
-	{
-		printf("Line %d = |%s|\n", i, str);
-		free(str);
-		str = get_next_line(fd);
-		i++;
-	}
-	printf("End");
-	close(fd);
-	return (0);
-}
+// 	(void) argc;
+// 	fd = open(argv[1], O_RDONLY);
+// 	str = get_next_line(fd);
+// 	i = 1;
+// 	while (str)
+// 	{
+// 		printf("Line %d = |%s|\n", i, str);
+// 		free(str);
+// 		str = get_next_line(fd);
+// 		i++;
+// 	}
+// 	printf("End");
+// 	close(fd);
+// 	return (0);
+// }
