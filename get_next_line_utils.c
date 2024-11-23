@@ -6,32 +6,11 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:48 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 16:37:04 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 17:02:14 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	void	*array;
-	size_t	overflow;
-	size_t	count;
-
-	overflow = nmemb * size;
-	if (overflow > MAX_INT)
-		return (NULL);
-	array = malloc(overflow);
-	if (array == NULL)
-		return (NULL);
-	count = 0;
-	while (count < overflow)
-	{
-		((char *)array)[count] = 0;
-		count++;
-	}
-	return (array);
-}
 
 char	*ft_strchr(const char *s, int c)
 {

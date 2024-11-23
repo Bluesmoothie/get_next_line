@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:13 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 16:56:21 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 17:01:55 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*extract_line(char **mem);
 char	*update_mem(char *mem);
 
 //get_next_line_utils.c
-void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
