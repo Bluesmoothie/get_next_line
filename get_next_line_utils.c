@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:48 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 15:05:58 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 16:06:46 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char	*ft_strchr(const char *s, int c)
 	size_t	count;
 
 	count = 0;
+	if (s == NULL)
+		return (NULL);
 	while (c > 127)
 		c -= 128;
 	while (s[count] != '\0' && s[count] != c)

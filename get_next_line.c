@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 15:06:29 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 16:36:04 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,104 +14,116 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buff[BUFFER_SIZE + 1];
+	static char	*mem;
 	char		*res;
-	int			i;
-	char		tmp[BUFFER_SIZE + 1];
-	static int	state = 1;
 
-	tmp[0] = '\0';
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	res = read_buff(buff, fd, &state);
-	i = 0;
-	while (buff[i] != '\0' && buff[i] != '\n')
-		i++;
-	if (buff[i] == '\n')
-		i++;
-	ft_strlcat(tmp, &buff[i], ft_strlen(&buff[i]) + 1);
-	i = 0;
-	while (tmp[i] != '\0')
-	{
-		buff[i] = tmp[i];
-		i++;
-	}
-	buff[i] = '\0';
+	res = read_buff(fd, &mem);
+	if (mem != NULL)
+		mem = update_mem(mem);
 	return (res);
 }
 
-char	*read_buff(char *buff, int fd, int *state)
+char	*read_buff(int fd, char **mem)
 {
-	char	*line;
-	char	*tmp;
+	char		buff[BUFFER_SIZE + 1];
+	char		*tmp;
+	static int	state = 1;
 
-	line = NULL;
-	if (*state == 0 && buff[0] == '\0')
+	if (state == 0 && *mem == NULL)
 		return (NULL);
-	while (ft_strchr(buff, '\n') == NULL && *state > 0)
+	while (ft_strchr(*mem, '\n') == NULL && state > 0)
 	{
-		*state = read(fd, buff, BUFFER_SIZE);
-		if (*state > 0)
-			buff[*state] = '\0';
-		if (ft_strchr(buff, '\n') || *state == 0)
-			return (extract_line(line, buff));
+		state = read(fd, buff, BUFFER_SIZE);
+		if (state > 0)
+			buff[state] = '\0';
+		if (ft_strchr(*mem, '\n') || state == 0)
+			return (extract_line(mem));
 		else
 		{
-			tmp = line;
-			line = ft_strjoin(line, buff);
-			free(tmp);
+			tmp = *mem;
+			*mem = ft_strjoin(*mem, buff);
+			if (tmp != NULL)
+				free(tmp);
 		}
 	}
-	return (extract_line(line, buff));
+	return (extract_line(mem));
 }
 
-char	*extract_line(char *line, char *buff)
+char	*extract_line(char **mem)
 {
 	char	*res;
 	int		i;
 
 	i = 0;
-	if (ft_strlen(line) == 0 && ft_strlen(buff) == 0)
+	if (*mem == NULL)
+		return (NULL);
+	if (ft_strlen(*mem) == 0)
 	{
-		if (line != NULL)
-			free (line);
+		free (*mem);
+		*mem = NULL;
 		return (NULL);
 	}
-	while (buff[i] != '\0' && buff[i] != '\n')
+	while (*mem[i] != '\n' && *mem[i] != '\0')
 		i++;
-	if (buff[i] == '\n')
-		i++;
-	res = malloc(sizeof(char) * (ft_strlen(line) + i + 1));
+	res = ft_calloc(i + 1, sizeof(char));
 	if (res == NULL)
 		return (NULL);
-	res[0] = '\0';
-	ft_strlcat(res, line, ft_strlen(line) + 1);
-	ft_strlcat(res, buff, ft_strlen(line) + i + 1);
-	if (line != NULL)
-		free(line);
+	i = 0;
+	while (*mem[i] != '\n' && *mem[i] != '\0')
+	{
+		res[i] = *mem[i];
+		i++;
+	}
 	return (res);
 }
 
-// #include <fcntl.h>
-// #include <stdio.h>
-// int	main(int argc, char *argv[])
-// {
-// 	int		fd;
-// 	int		i;
-// 	char	*str;
+char	*update_mem(char *mem)
+{
+	char	*tmp;
+	size_t	i;
 
-// 	(void) argc;
-// 	fd = open(argv[1], O_RDONLY);
-// 	str = get_next_line(fd);
-// 	i = 1;
-// 	while (str)
-// 	{
-// 		printf("Line %d = |%s|\n", i, str);
-// 		free(str);
-// 		str = get_next_line(fd);
-// 		i++;
-// 	}
-// 	printf("End");
-// 	close(fd);
-// 	return (0);
-// }
+	i = 0;
+	if (mem == NULL)
+		return (NULL);
+	while (mem[i] != '\n' && mem[i] != '\0')
+		i++;
+	tmp = mem;
+	mem = ft_calloc(i + 1, sizeof(char));
+	if (mem == NULL)
+		return (NULL);
+	i = 0;
+	while (tmp[i] != '\n' && tmp[i] != '\0')
+	{
+		mem[i] = tmp[i];
+		i++;
+	}
+	mem[i] = '\0';
+	free(tmp);
+	return (mem);
+}
+
+#include <fcntl.h>
+#include <stdio.h>
+int	main(int argc, char *argv[])
+{
+	int		fd;
+	int		i;
+	char	*str;
+
+	(void) argc;
+	fd = open(argv[1], O_RDONLY);
+	str = get_next_line(fd);
+	i = 1;
+	while (str)
+	{
+		printf("Line %d = |%s|\n", i, str);
+		free(str);
+		str = get_next_line(fd);
+		i++;
+	}
+	printf("End");
+	close(fd);
+	return (0);
+}

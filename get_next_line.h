@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:13 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 13:59:27 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 16:36:14 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@
 
 //get_next_line.c
 char	*get_next_line(int fd);
-char	*read_buff(char *buff, int fd, int *state);
-char	*extract_line(char *line, char *buff);
+char	*read_buff(int fd, char **mem);
+char	*extract_line(char **mem);
+char	*update_mem(char *mem);
 
 //get_next_line_utils.c
 void	*ft_calloc(size_t nmemb, size_t size);
