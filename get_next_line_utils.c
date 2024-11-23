@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:48 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 13:49:11 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 15:05:58 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	size;
 	char	*join;
 
-	if (s1 == NULL)
-		s1 = "";
-	if (s2 == NULL)
-		s2 = "";
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
 	join = malloc(sizeof(char) * size);
 	if (join == NULL)

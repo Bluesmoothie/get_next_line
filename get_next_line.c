@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 14:22:47 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 15:06:29 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,26 +92,26 @@ char	*extract_line(char *line, char *buff)
 	return (res);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
-int	main(int argc, char *argv[])
-{
-	int		fd;
-	int		i;
-	char	*str;
+// #include <fcntl.h>
+// #include <stdio.h>
+// int	main(int argc, char *argv[])
+// {
+// 	int		fd;
+// 	int		i;
+// 	char	*str;
 
-	(void) argc;
-	fd = open(argv[1], O_RDONLY);
-	str = get_next_line(fd);
-	i = 1;
-	while (str)
-	{
-		printf("Line %d = |%s|\n", i, str);
-		free(str);
-		str = get_next_line(fd);
-		i++;
-	}
-	printf("End");
-	close(fd);
-	return (0);
-}
+// 	(void) argc;
+// 	fd = open(argv[1], O_RDONLY);
+// 	str = get_next_line(fd);
+// 	i = 1;
+// 	while (str)
+// 	{
+// 		printf("Line %d = |%s|\n", i, str);
+// 		free(str);
+// 		str = get_next_line(fd);
+// 		i++;
+// 	}
+// 	printf("End");
+// 	close(fd);
+// 	return (0);
+// }
