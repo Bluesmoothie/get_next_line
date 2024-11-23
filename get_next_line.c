@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 16:52:36 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 16:58:38 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,23 @@
 char	*get_next_line(int fd)
 {
 	static char	*mem;
+	char		*buff;
 	char		*res;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	res = read_buff(fd, &mem);
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (buff == NULL)
+		return (NULL);
+	res = read_buff(fd, &mem, buff);
+	free(buff);
 	if (mem != NULL)
 		mem = update_mem(mem);
 	return (res);
 }
 
-char	*read_buff(int fd, char **mem)
+char	*read_buff(int fd, char **mem, char *buff)
 {
-	char		buff[BUFFER_SIZE + 1];
 	char		*tmp;
 	static int	state = 1;
 
@@ -69,7 +73,7 @@ char	*extract_line(char **mem)
 		i++;
 	if ((*mem)[i] == '\n')
 		i++;
-	res = ft_calloc(i + 1, sizeof(char));
+	res = malloc((i + 1) * sizeof(char));
 	if (res == NULL)
 		return (NULL);
 	i = 0;
@@ -99,7 +103,7 @@ char	*update_mem(char *mem)
 	if (mem[i] == '\n')
 		i++;
 	tmp = mem;
-	mem = ft_calloc(ft_strlen(&mem[i]) + 1, sizeof(char));
+	mem = malloc((ft_strlen(&mem[i]) + 1) * sizeof(char));
 	if (mem == NULL)
 		return (NULL);
 	while (tmp[i] != '\0')
