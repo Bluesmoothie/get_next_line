@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:48 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 17:02:14 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/23 17:15:31 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,15 @@ size_t	ft_strlen(const char *s)
 	while (s[len] != '\0')
 		len++;
 	return (len);
+}
+
+char	*free_on_error(char **mem, int *state)
+{
+	if (*mem != NULL)
+	{
+		free(*mem);
+		*mem = NULL;
+	}
+	*state = 1;
+	return (NULL);
 }
