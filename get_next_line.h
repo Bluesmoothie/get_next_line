@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:13 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 17:15:39 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/24 18:10:05 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*get_next_line(int fd);
 char	*read_buff(int fd, char **mem, char *buff);
 char	*extract_line(char **mem);
 char	*update_mem(char *mem);
+int		check_mem(char **mem);
 
 //get_next_line_utils.c
 char	*ft_strchr(const char *s, int c);

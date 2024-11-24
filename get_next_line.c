@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/23 17:15:20 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/24 18:10:59 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,8 @@ char	*extract_line(char **mem)
 	int		i;
 
 	i = 0;
-	if (*mem == NULL)
+	if (check_mem(mem))
 		return (NULL);
-	if (ft_strlen(*mem) == 0)
-	{
-		free (*mem);
-		*mem = NULL;
-		return (NULL);
-	}
 	while ((*mem)[i] != '\n' && (*mem)[i] != '\0')
 		i++;
 	if ((*mem)[i] == '\n')
@@ -113,6 +107,19 @@ char	*update_mem(char *mem)
 	mem[j] = '\0';
 	free(tmp);
 	return (mem);
+}
+
+int	check_mem(char **mem)
+{
+	if (*mem == NULL)
+		return (1);
+	if (ft_strlen(*mem) == 0)
+	{
+		free (*mem);
+		*mem = NULL;
+		return (1);
+	}
+	return (0);
 }
 
 // #include <fcntl.h>
