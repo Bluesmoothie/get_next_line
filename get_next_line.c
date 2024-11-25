@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/25 12:23:49 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/25 12:55:05 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ char	*read_buff(int fd, char **mem, char *buff)
 	while (ft_strchr(*mem, '\n') == NULL && state > 0)
 	{
 		state = read(fd, buff, BUFFER_SIZE);
-		if (state < 0)
-			return (free_on_error(mem, &state));
 		if (state > 0)
 			buff[state] = '\0';
 		if (state != 0)
@@ -50,6 +48,11 @@ char	*read_buff(int fd, char **mem, char *buff)
 			*mem = ft_strjoin(*mem, buff);
 			if (tmp != NULL)
 				free(tmp);
+		}
+		if (state < 0)
+		{
+			state = 1;
+			return (NULL);
 		}
 	}
 	return (extract_line(mem));
@@ -119,7 +122,7 @@ int	check_mem(char **mem)
 	}
 	return (0);
 }
-
+// int	next_read_error = 0;
 // #include <fcntl.h>
 // #include <stdio.h>
 // int	main(int argc, char *argv[])
@@ -130,16 +133,37 @@ int	check_mem(char **mem)
 
 // 	(void) argc;
 // 	fd = open(argv[1], O_RDONLY);
-// 	str = get_next_line(fd);
-// 	i = 1;
-// 	while (str)
-// 	{
-// 		printf("Line %d = |%s|\n", i, str);
-// 		free(str);
-// 		str = get_next_line(fd);
-// 		i++;
-// 	}
-// 	printf("End");
-// 	close(fd);
+// 	printf("|%s|\n", get_next_line(fd));
+// 	printf("|%s|\n", get_next_line(fd));
+// 	next_read_error = 1;
+// 	printf("|%s|\n", get_next_line(fd));
+// 	next_read_error = 0;
+// 	printf("|%s|\n", get_next_line(fd));
+// 	printf("|%s|\n", get_next_line(fd));
+// 	printf("|%s|\n", get_next_line(fd));
+// 	printf("|%s|\n", get_next_line(fd));
+// 	printf("|%s|\n", get_next_line(fd));
+// 	// str = get_next_line(fd);
+// 	// i = 1;
+// 	// while (str)
+// 	// {
+// 	// 	printf("Line %d = |%s|\n", i, str);
+// 	// 	free(str);
+// 	// 	str = get_next_line(fd);
+// 	// 	i++;
+// 	// }
+// 	// printf("End");
+// 	// close(fd);
 // 	return (0);
+// }
+// int	read_t(int fd, char *buff, int size)
+// {
+// 	int		state;
+
+// 	if (next_read_error)
+// 		return (-1);
+// 	state = read(fd, buff, size);
+// 	if (state < 0)
+// 		return (-1);
+// 	return (state);
 // }

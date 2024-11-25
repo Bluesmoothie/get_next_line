@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:13 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/25 12:08:23 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/25 12:56:01 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
-char	*free_on_error(char **mem, int *state);
+
+//int	read_t(int fd, char *buff, int size);
 
 #endif
