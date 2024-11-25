@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:13 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/25 12:56:01 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/25 16:16:06 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 //get_next_line.c
 char	*get_next_line(int fd);
-char	*read_buff(int fd, char **mem, char *buff);
+char	*read_buff(int fd, char **mem, char *buff, int *state);
 char	*extract_line(char **mem);
 char	*update_mem(char *mem);
 int		check_mem(char **mem);
@@ -34,7 +34,5 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
-
-//int	read_t(int fd, char *buff, int size);
 
 #endif

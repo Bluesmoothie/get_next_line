@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/25 12:55:05 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/25 16:27:28 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*get_next_line(int fd)
 {
 	static char	*mem;
+	static int	state = 1;
 	char		*buff;
 	char		*res;
 
@@ -23,37 +24,42 @@ char	*get_next_line(int fd)
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (buff == NULL)
 		return (NULL);
-	res = read_buff(fd, &mem, buff);
+	res = read_buff(fd, &mem, buff, &state);
 	free(buff);
-	if (mem != NULL)
+	if (mem != NULL && state != -1)
 		mem = update_mem(mem);
+	if (state == -1)
+	{
+		if (mem != NULL)
+		{
+			free(mem);
+			mem = NULL;
+		}
+		state = 1;
+	}
 	return (res);
 }
 
-char	*read_buff(int fd, char **mem, char *buff)
+char	*read_buff(int fd, char **mem, char *buff, int *state)
 {
 	char		*tmp;
-	static int	state = 1;
 
 	if (state == 0 && *mem == NULL)
 		return (NULL);
-	while (ft_strchr(*mem, '\n') == NULL && state > 0)
+	while (ft_strchr(*mem, '\n') == NULL && *state > 0)
 	{
-		state = read(fd, buff, BUFFER_SIZE);
-		if (state > 0)
-			buff[state] = '\0';
-		if (state != 0)
+		*state = read_t(fd, buff, BUFFER_SIZE);
+		if (*state > 0)
+			buff[*state] = '\0';
+		if (*state > 0)
 		{
 			tmp = *mem;
 			*mem = ft_strjoin(*mem, buff);
 			if (tmp != NULL)
 				free(tmp);
 		}
-		if (state < 0)
-		{
-			state = 1;
+		if (*state < 0)
 			return (NULL);
-		}
 	}
 	return (extract_line(mem));
 }
@@ -122,48 +128,52 @@ int	check_mem(char **mem)
 	}
 	return (0);
 }
-// int	next_read_error = 0;
-// #include <fcntl.h>
-// #include <stdio.h>
-// int	main(int argc, char *argv[])
-// {
-// 	int		fd;
-// 	int		i;
-// 	char	*str;
 
-// 	(void) argc;
-// 	fd = open(argv[1], O_RDONLY);
-// 	printf("|%s|\n", get_next_line(fd));
-// 	printf("|%s|\n", get_next_line(fd));
-// 	next_read_error = 1;
-// 	printf("|%s|\n", get_next_line(fd));
-// 	next_read_error = 0;
-// 	printf("|%s|\n", get_next_line(fd));
-// 	printf("|%s|\n", get_next_line(fd));
-// 	printf("|%s|\n", get_next_line(fd));
-// 	printf("|%s|\n", get_next_line(fd));
-// 	printf("|%s|\n", get_next_line(fd));
-// 	// str = get_next_line(fd);
-// 	// i = 1;
-// 	// while (str)
-// 	// {
-// 	// 	printf("Line %d = |%s|\n", i, str);
-// 	// 	free(str);
-// 	// 	str = get_next_line(fd);
-// 	// 	i++;
-// 	// }
-// 	// printf("End");
-// 	// close(fd);
-// 	return (0);
-// }
-// int	read_t(int fd, char *buff, int size)
-// {
-// 	int		state;
+int	read_t(int fd, char *buff, int size);
+int	next_read_error = 0;
+#include <fcntl.h>
+#include <stdio.h>
+int	main(int argc, char *argv[])
+{
+	int		fd;
+	int		i;
+	char	*str;
 
-// 	if (next_read_error)
-// 		return (-1);
-// 	state = read(fd, buff, size);
-// 	if (state < 0)
-// 		return (-1);
-// 	return (state);
-// }
+	(void) argc;
+	fd = open(argv[1], O_RDONLY);
+	printf("|%s|\n", get_next_line(fd));
+	printf("|%s|\n", get_next_line(fd));
+	next_read_error = 1;
+	printf("|%s|\n", get_next_line(fd));
+	next_read_error = 0;
+	close(fd);
+	fd = open(argv[1], O_RDONLY);
+	printf("|%s|\n", get_next_line(fd));
+	printf("|%s|\n", get_next_line(fd));
+	printf("|%s|\n", get_next_line(fd));
+	printf("|%s|\n", get_next_line(fd));
+	printf("|%s|\n", get_next_line(fd));
+	// str = get_next_line(fd);
+	// i = 1;
+	// while (str)
+	// {
+	// 	printf("Line %d = |%s|\n", i, str);
+	// 	free(str);
+	// 	str = get_next_line(fd);
+	// 	i++;
+	// }
+	// printf("End");
+	// close(fd);
+	return (0);
+}
+int	read_t(int fd, char *buff, int size)
+{
+	int		state;
+
+	if (next_read_error)
+		return (-1);
+	state = read(fd, buff, size);
+	if (state < 0)
+		return (-1);
+	return (state);
+}
