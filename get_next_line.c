@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/25 16:47:09 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/26 12:51:44 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,16 @@ char	*read_buff(int fd, char **mem, char *buff, int *state)
 		if (*state < 0)
 			return (NULL);
 	}
-	return (extract_line(mem));
+	return (extract_line(mem, state));
 }
 
-char	*extract_line(char **mem)
+char	*extract_line(char **mem, int *state)
 {
 	char	*res;
 	int		i;
 
 	i = 0;
-	if (check_mem(mem))
+	if (check_mem(mem, state))
 		return (NULL);
 	while ((*mem)[i] != '\n' && (*mem)[i] != '\0')
 		i++;
@@ -116,14 +116,18 @@ char	*update_mem(char *mem)
 	return (mem);
 }
 
-int	check_mem(char **mem)
+int	check_mem(char **mem, int *state)
 {
 	if (*mem == NULL)
+	{
+		*state = 1;
 		return (1);
+	}
 	if (ft_strlen(*mem) == 0)
 	{
 		free (*mem);
 		*mem = NULL;
+		*state = 1;
 		return (1);
 	}
 	return (0);
@@ -141,52 +145,64 @@ int	check_mem(char **mem)
 
 // 	(void) argc;
 // 	fd = open(argv[1], O_RDONLY);
+// 	// str = get_next_line(fd);
+// 	// printf("|%s|\n", str);
+// 	// free(str);
+// 	// str = get_next_line(fd);
+// 	// printf("|%s|\n", str);
+// 	// free(str);
+// 	// next_read_error = 1;
+// 	// if (BUFFER_SIZE > 100) {
+// 	// 		char *temp;
+// 	// 		do {
+// 	// 			temp = get_next_line(fd);
+// 	// 			free(temp);
+// 	// 		} while (temp != NULL);
+// 	// 	}
+// 	// str = get_next_line(fd);
+// 	// printf("|%s|\n", str);
+// 	// free(str);
+// 	// next_read_error = 0;
+// 	// close(fd);
+// 	// fd = open(argv[1], O_RDONLY);
+// 	// str = get_next_line(fd);
+// 	// printf("|%s|\n", str);
+// 	// free(str);
+// 	// str = get_next_line(fd);
+// 	// printf("|%s|\n", str);
+// 	// free(str);
+// 	// str = get_next_line(fd);
+// 	// printf("|%s|\n", str);
+// 	// free(str);
+// 	// str = get_next_line(fd);
+// 	// printf("|%s|\n", str);
+// 	// free(str);
+// 	// str = get_next_line(fd);
+// 	// printf("|%s|\n", str);
+// 	// free(str);
 // 	str = get_next_line(fd);
-// 	printf("|%s|\n", str);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	printf("|%s|\n", str);
-// 	free(str);
-// 	next_read_error = 1;
-// 	if (BUFFER_SIZE > 100) {
-// 			char *temp;
-// 			do {
-// 				temp = get_next_line(fd);
-// 				free(temp);
-// 			} while (temp != NULL);
-// 		}
-// 	str = get_next_line(fd);
-// 	printf("|%s|\n", str);
-// 	free(str);
-// 	next_read_error = 0;
+// 	i = 1;
+// 	while (str)
+// 	{
+// 		printf("Line %d = |%s|\n", i, str);
+// 		free(str);
+// 		str = get_next_line(fd);
+// 		i++;
+// 	}
+// 	printf("End");
 // 	close(fd);
 // 	fd = open(argv[1], O_RDONLY);
 // 	str = get_next_line(fd);
-// 	printf("|%s|\n", str);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	printf("|%s|\n", str);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	printf("|%s|\n", str);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	printf("|%s|\n", str);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	printf("|%s|\n", str);
-// 	free(str);
-// 	// str = get_next_line(fd);
-// 	// i = 1;
-// 	// while (str)
-// 	// {
-// 	// 	printf("Line %d = |%s|\n", i, str);
-// 	// 	free(str);
-// 	// 	str = get_next_line(fd);
-// 	// 	i++;
-// 	// }
-// 	// printf("End");
-// 	// close(fd);
+// 	i = 1;
+// 	while (str)
+// 	{
+// 		printf("Line %d = |%s|\n", i, str);
+// 		free(str);
+// 		str = get_next_line(fd);
+// 		i++;
+// 	}
+// 	printf("End");
+// 	close(fd);
 // 	return (0);
 // }
 // int	read_t(int fd, char *buff, int size)
