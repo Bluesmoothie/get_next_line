@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/26 12:51:44 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/27 11:19:37 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,62 +145,62 @@ int	check_mem(char **mem, int *state)
 
 // 	(void) argc;
 // 	fd = open(argv[1], O_RDONLY);
-// 	// str = get_next_line(fd);
-// 	// printf("|%s|\n", str);
-// 	// free(str);
-// 	// str = get_next_line(fd);
-// 	// printf("|%s|\n", str);
-// 	// free(str);
-// 	// next_read_error = 1;
-// 	// if (BUFFER_SIZE > 100) {
-// 	// 		char *temp;
-// 	// 		do {
-// 	// 			temp = get_next_line(fd);
-// 	// 			free(temp);
-// 	// 		} while (temp != NULL);
-// 	// 	}
-// 	// str = get_next_line(fd);
-// 	// printf("|%s|\n", str);
-// 	// free(str);
-// 	// next_read_error = 0;
-// 	// close(fd);
-// 	// fd = open(argv[1], O_RDONLY);
-// 	// str = get_next_line(fd);
-// 	// printf("|%s|\n", str);
-// 	// free(str);
-// 	// str = get_next_line(fd);
-// 	// printf("|%s|\n", str);
-// 	// free(str);
-// 	// str = get_next_line(fd);
-// 	// printf("|%s|\n", str);
-// 	// free(str);
-// 	// str = get_next_line(fd);
-// 	// printf("|%s|\n", str);
-// 	// free(str);
-// 	// str = get_next_line(fd);
-// 	// printf("|%s|\n", str);
-// 	// free(str);
 // 	str = get_next_line(fd);
-// 	i = 1;
-// 	while (str)
-// 	{
-// 		printf("Line %d = |%s|\n", i, str);
-// 		free(str);
-// 		str = get_next_line(fd);
-// 		i++;
-// 	}
-// 	printf("End");
+// 	printf("|%s|\n", str);
+// 	free(str);
+// 	str = get_next_line(fd);
+// 	printf("|%s|\n", str);
+// 	free(str);
+// 	next_read_error = 1;
+// 	if (BUFFER_SIZE > 100) {
+// 			char *temp;
+// 			do {
+// 				temp = get_next_line(fd);
+// 				free(temp);
+// 			} while (temp != NULL);
+// 		}
+// 	str = get_next_line(fd);
+// 	printf("|%s|\n", str);
+// 	free(str);
+// 	next_read_error = 0;
 // 	close(fd);
 // 	fd = open(argv[1], O_RDONLY);
 // 	str = get_next_line(fd);
-// 	i = 1;
-// 	while (str)
-// 	{
-// 		printf("Line %d = |%s|\n", i, str);
-// 		free(str);
-// 		str = get_next_line(fd);
-// 		i++;
-// 	}
+// 	printf("|%s|\n", str);
+// 	free(str);
+// 	str = get_next_line(fd);
+// 	printf("|%s|\n", str);
+// 	free(str);
+// 	str = get_next_line(fd);
+// 	printf("|%s|\n", str);
+// 	free(str);
+// 	str = get_next_line(fd);
+// 	printf("|%s|\n", str);
+// 	free(str);
+// 	str = get_next_line(fd);
+// 	printf("|%s|\n", str);
+// 	free(str);
+// 	// str = get_next_line(fd);
+// 	// i = 1;
+// 	// while (str)
+// 	// {
+// 	// 	printf("Line %d = |%s|\n", i, str);
+// 	// 	free(str);
+// 	// 	str = get_next_line(fd);
+// 	// 	i++;
+// 	// }
+// 	// printf("End");
+// 	// close(fd);
+// 	// fd = open(argv[1], O_RDONLY);
+// 	// str = get_next_line(fd);
+// 	// i = 1;
+// 	// while (str)
+// 	// {
+// 	// 	printf("Line %d = |%s|\n", i, str);
+// 	// 	free(str);
+// 	// 	str = get_next_line(fd);
+// 	// 	i++;
+// 	// }
 // 	printf("End");
 // 	close(fd);
 // 	return (0);
