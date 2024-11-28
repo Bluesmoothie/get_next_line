@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/28 17:35:58 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/28 17:46:09 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,20 @@ char	*read_buff(int fd, char **mem, char *buff, int *state)
 {
 	char		*tmp;
 
-	if (state == 0 && *mem == NULL)
-		return (NULL);
 	while (ft_strchr(*mem, '\n') == NULL && *state > 0)
 	{
 		*state = read(fd, buff, BUFFER_SIZE);
 		if (*state > 0)
-			buff[*state] = '\0';
-		if (*state > 0)
 		{
+			buff[*state] = '\0';
 			tmp = *mem;
 			*mem = ft_strjoin(*mem, buff);
 			if (tmp != NULL)
 				free(tmp);
 		}
-		if (*state < 0)
-			return (NULL);
 	}
+	if (*state < 0)
+		return (NULL);
 	return (extract_line(mem));
 }
 
