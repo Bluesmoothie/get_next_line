@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/28 17:35:58 by ygille           ###   ########.fr       */
+/*   Updated: 2024/11/28 17:35:37 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
-	static char	*mem;
+	static char	*mem[OPEN_MAX];
 	int			state;
 	char		*buff;
 	char		*res;
@@ -25,14 +25,14 @@ char	*get_next_line(int fd)
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (buff == NULL)
 		return (NULL);
-	res = read_buff(fd, &mem, buff, &state);
+	res = read_buff(fd, &mem[fd], buff, &state);
 	free(buff);
-	if (mem != NULL && state != -1)
-		mem = update_mem(mem);
-	if (state == -1 && mem != NULL)
+	if (mem[fd] != NULL && state != -1)
+		mem[fd] = update_mem(mem[fd]);
+	if (state == -1 && mem[fd] != NULL)
 	{
-		free(mem);
-		mem = NULL;
+		free(mem[fd]);
+		mem[fd] = NULL;
 	}
 	return (res);
 }
