@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/28 17:46:26 by ygille           ###   ########.fr       */
+/*   Updated: 2024/12/02 13:50:35 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,4 +205,27 @@ int	check_mem(char **mem)
 // 	if (state < 0)
 // 		return (-1);
 // 	return (state);
+// }
+
+// #include <fcntl.h>
+// #include <stdio.h>
+// int	main(int argc, char *argv[])
+// {
+// 	int		fd;
+// 	int		i;
+// 	char	*str;
+
+// 	(void) argc;
+// 	fd = 42 ;//open(argv[1], O_RDONLY);
+// 	str = get_next_line(fd);
+// 	i = 1;
+// 	while (i < 10)
+// 	{
+// 		printf("Line %d = |%s|\n", i, str);
+// 		free(str);
+// 		str = get_next_line(fd);
+// 		i++;
+// 	}
+// 	close(fd);
+// 	return (0);
 // }

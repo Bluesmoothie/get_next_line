@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/11/28 17:46:09 by ygille           ###   ########.fr       */
+/*   Updated: 2024/12/02 13:47:45 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,27 +170,6 @@ int	check_mem(char **mem)
 // 	str = get_next_line(fd);
 // 	printf("|%s|\n", str);
 // 	free(str);
-// 	// str = get_next_line(fd);
-// 	// i = 1;
-// 	// while (str)
-// 	// {
-// 	// 	printf("Line %d = |%s|\n", i, str);
-// 	// 	free(str);
-// 	// 	str = get_next_line(fd);
-// 	// 	i++;
-// 	// }
-// 	// printf("End");
-// 	// close(fd);
-// 	// fd = open(argv[1], O_RDONLY);
-// 	// str = get_next_line(fd);
-// 	// i = 1;
-// 	// while (str)
-// 	// {
-// 	// 	printf("Line %d = |%s|\n", i, str);
-// 	// 	free(str);
-// 	// 	str = get_next_line(fd);
-// 	// 	i++;
-// 	// }
 // 	printf("End");
 // 	close(fd);
 // 	return (0);
@@ -205,4 +184,28 @@ int	check_mem(char **mem)
 // 	if (state < 0)
 // 		return (-1);
 // 	return (state);
+// }
+
+
+// #include <fcntl.h>
+// #include <stdio.h>
+// int	main(int argc, char *argv[])
+// {
+// 	int		fd;
+// 	int		i;
+// 	char	*str;
+
+// 	(void) argc;
+// 	fd = open(argv[1], O_RDONLY);
+// 	str = get_next_line(fd);
+// 	i = 1;
+// 	while (i < 10)
+// 	{
+// 		printf("Line %d = |%s|\n", i, str);
+// 		free(str);
+// 		str = get_next_line(fd);
+// 		i++;
+// 	}
+// 	close(fd);
+// 	return (0);
 // }
