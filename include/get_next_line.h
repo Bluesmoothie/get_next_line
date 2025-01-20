@@ -6,7 +6,7 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:13 by ygille            #+#    #+#             */
-/*   Updated: 2025/01/20 15:12:07 by ygille           ###   ########.fr       */
+/*   Updated: 2025/01/20 15:12:46 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # include <stdlib.h>
 # include "libft.h"
 
-//get_next_line.c
 char	*get_next_line(int fd);
 char	*read_buff(int fd, char **mem, char *buff, int *state);
 char	*extract_line(char **mem);
