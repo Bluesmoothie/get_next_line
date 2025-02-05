@@ -6,12 +6,17 @@
 /*   By: ygille <ygille@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:23:06 by ygille            #+#    #+#             */
-/*   Updated: 2024/12/18 18:20:10 by ygille           ###   ########.fr       */
+/*   Updated: 2025/02/05 17:12:21 by ygille           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+/*
+** Return the first line from fd
+** then when recalled return lines in order
+** NULL on error or no line left to read
+*/
 char	*get_next_line(int fd)
 {
 	static char	*mem[OPEN_MAX];
